@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Page</title>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <div id="cart-items"></div>
+  <p id="total-price"></p>
+
+  <script src="cart.js"></script>
+  <script>
+    // Function to display the cart
+    function displayCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')); // Retrieve cart
+      const cartItemsDiv = document.getElementById('cart-items');
+      const totalPriceDiv = document.getElementById('total-price');
+
+      cartItemsDiv.innerHTML = ''; // Clear existing items
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `
+          <p>${item.name} - $${item.price} x ${item.quantity}</p>
+        `;
+        cartItemsDiv.appendChild(itemDiv);
+        totalPrice += item.price * item.quantity; // Calculate total price
+      });
+
+      totalPriceDiv.textContent = `Total: $${totalPrice}`;
+    }
+
+    // Display the cart on page load
+    displayCart();
+  </script>
+</body>
+</html>

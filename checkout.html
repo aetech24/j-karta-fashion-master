@@ -161,14 +161,17 @@
       </div>
    </footer>
 <script type="module" src="./js/checkout.js"></script>
+<script type="module" src="/js/cart.js"></script>
 <script type="module">
     import { cart, removeFromCart, getTotalPrice } from './data/cart.js';
     import products from './data/men-and-women.js';
+    import { updateCartCount } from './js/cart.js';
 
     const cartItemContainer = document.querySelector('.cartitem_details_grid_container');
     const totalElement = document.querySelector('.total');
 
     function displayCartItems() {
+        const cart = JSON.parse(localStorage.getItem('cart'));
         cartItemContainer.innerHTML = cart.map(cartItem => {
             const product = products.find(product => product.id === cartItem.productId);
             return `
@@ -198,7 +201,11 @@
 
     displayCartItems();
     updateTotalPrice();
+    updateCartCount();
 </script>
+<script type="module" src="/js/checkout.js"></script>
+<script type="module" src="/js/all-js.js"></script>
+<script type="module" src="/js/product_display.js"></script>
 </body>
 </html>
 
