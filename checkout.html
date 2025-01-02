@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="css/shared.css">
+   <link rel="stylesheet" href="/css/general.css">
+   <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+   
+<header>
+   <!-- logo -->
+   <div class="logo">
+      <a href="index.html">
+      <img src="assets/jkarla logo orange.png" alt="">
+      </a>
+   </div>
+
+   <!-- nav bngs here -->
+    <nav>
+      <ul>
+         <a href="index.html">Home</a>
+         <a href="about.html">About</a>
+         <a href="shop.html">Shop</a>
+         <div class="men">
+            <a href="men.html">Men</a>
+            <div class="men_sub_menu">
+               <a href="">Apparel</a>
+               <a href="">Shoes</a>
+               <a href="">Bags</a>
+               <a href="">Accessories</a>
+            </div>
+         </div>
+         <div class="men"> 
+            <a href="women.html">Women</a>
+            <div class="men_sub_menu">
+               <a href="">Apparel</a>
+               <a href="">Shoes</a>
+               <a href="">Bags</a>
+               <a href="">Accessories</a>
+            </div>
+         </div>
+         <a href="contact.html">contact</a>
+         
+      </ul>
+    </nav>
+    <!-- nav ends here -->
+
+   <a href="checkout.html">
+      <div class="shop">
+         <img src="/assets/icons/cart-icon.png" alt="" width="20px">
+         <div class="cart_count">
+            <p>0</p>
+         </div>
+      </div>
+   </a>
+</header>
+
+<!-- ============= order summary ==================== -->
+
+<div class="order_summary_container">
+   <div class="summary">
+      <div>
+         <h2>Order Summary</h2>
+      </div>
+      <div><button class="btn">Proceed to Checkout</button></div>
+   </div>
+
+   <div class="cartitem_details_grid_container"></div>
+
+
+   <div class="total_order">
+      <div class="order_summary">
+         <h3>Order Total</h3>
+         <div class="product_quantity summary_details">
+            <div class="name">Delivery</div>
+            <p class="quantity_lable">gh 00.0</p>
+         </div>
+         <div class="product_quantity summary_details">
+            <div class="name">Total</div>
+            <p class="quantity_lable total">gh 00.0</p>
+         </div>
+         <div class="delete checkout">
+            <a href="payment.html">
+               <button class="btn" data-product-id="${matchinProduct.id}">
+                  Place order now
+               </button>
+            </a>
+         </div>
+      </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- // <div class="shipping option">
+   //    <div>
+   //       <input type="radio" placeholder="pick up" name="${matchingProduct.id}">
+   //       <span>Pick up</span>
+   //    </div>
+   //    <p>gh 00</p>
+   // </div> -->
+
+
+
+
+
+
+
+
+<!-- ================== footer ================ -->
+ <footer>
+      <div class="copyright">
+         <img src="assets/jmain 2.png" alt="">
+         <p>copyright &copy; 2022</p>
+      </div>
+
+      <div class="policy">
+         <a href="">Privacy policy</a>
+         <a href="">Terms of Use</a>
+      </div>
+         <!-- footer nav bngs here -->
+    <nav>
+      <ul>
+         <a href="index.html">Home</a>
+         <a href="about.html">About</a>
+         <a href="shop.html">Shop</a>
+         <div class="men">
+            <a href="men.html">Men</a>
+            <div class="men_sub_menu">
+               <a href="">Apparel</a>
+               <a href="">Shoes</a>
+               <a href="">Bags</a>
+               <a href="">Accessories</a>
+            </div>
+         </div>
+         <div class="men"> 
+            <a href="women.html">Women</a>
+            <div class="men_sub_menu">
+               <a href="">Apparel</a>
+               <a href="">Shoes</a>
+               <a href="">Bags</a>
+               <a href="">Accessories</a>
+            </div>
+         </div>
+         <a href="contact.html">contact</a>
+         
+      </ul>
+    </nav>
+    <!-- footer nav ends here -->
+
+      <div class="socials">
+         <h4>Follow us on</h4>
+         <div class="icons">
+            <img src="assets/icons/facebook-icon.svg" alt="">
+           <img src="assets/icons/instagram-icon.svg" alt="">
+           <img src="assets/icons/twitterx-icon.svg" alt="">
+         </div>
+      </div>
+   </footer>
+<script type="module" src="./js/checkout.js"></script>
+<script type="module">
+    import { cart, removeFromCart, getTotalPrice } from './data/cart.js';
+    import products from './data/men-and-women.js';
+
+    const cartItemContainer = document.querySelector('.cartitem_details_grid_container');
+    const totalElement = document.querySelector('.total');
+
+    function displayCartItems() {
+        cartItemContainer.innerHTML = cart.map(cartItem => {
+            const product = products.find(product => product.id === cartItem.productId);
+            return `
+                <div class="cart-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$${product.price}</p>
+                    <p>Quantity: ${cartItem.quantity}</p>
+                    <button class="js-remove-from-cart" data-product-id="${cartItem.productId}">Remove</button>
+                </div>
+            `;
+        }).join('');
+
+        document.querySelectorAll('.js-remove-from-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productId = e.target.dataset.productId;
+                removeFromCart(productId);
+                displayCartItems();
+                updateTotalPrice();
+            });
+        });
+    }
+
+    function updateTotalPrice() {
+        totalElement.textContent = `$${getTotalPrice(products)}`;
+    }
+
+    displayCartItems();
+    updateTotalPrice();
+</script>
+</body>
+</html>
+

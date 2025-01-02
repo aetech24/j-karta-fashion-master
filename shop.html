@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Jkata-fahsion</title>
+   <link rel="stylesheet" href="/css/general.css">
+   <link rel="stylesheet" href="/css/shared.css">
+
+   <!-- google font icons  -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=person" />
+
+   <!-- shopping cart -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=local_mall" />
+</head>
+<body>
+   <header>
+      <!-- logo -->
+      <div class="logo">
+         <a href="index.html">
+         <img src="assets/jkarla logo orange.png" alt="">
+         </a>
+      </div>
+
+      <!-- nav bngs here -->
+       <nav>
+         <ul>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="/shop.html"  style="color:#ff6347;">Shop</a>
+            <div class="men">
+               <a href="men.html">Men</a>
+               <div class="men_sub_menu">
+                  <a href="">Apparel</a>
+                  <a href="">Shoes</a>
+                  <a href="">Bags</a>
+                  <a href="">Accessories</a>
+               </div>
+            </div>
+            <div class="men"> 
+               <a href="women.html">Women</a>
+               <div class="men_sub_menu">
+                  <a href="">Apparel</a>
+                  <a href="">Shoes</a>
+                  <a href="">Bags</a>
+                  <a href="">Accessories</a>
+               </div>
+            </div>
+            <a href="contact.html">contact</a>
+           
+          
+            
+         </ul>
+       </nav>
+       <!-- nav ends here -->
+       <a href="checkout.html">
+         <div class="shop">
+            <img src="/assets/icons/cart-icon.png" alt="" width="20px">
+            <div class="cart_count">
+               <p class="js-cart-quantity">0</p>
+            </div>
+         </div>
+      </a>
+   </header>
+
+   <!-- ============== main shop Proucts display -->
+   <main class="shop">
+      <div class="shop_message">
+         <h2>J’KARTA SHOP</h2>
+      </div>
+
+      <div class="category">
+         <a href="javascript:void(0);" class="js-category js-all">All</a>
+         <a href="javascript:void(0);" class="js-category js-men">Men</a>
+         <a href="javascript:void(0);" class="js-category js-women">Women</a>
+      </div>
+      <div class="shop_display">
+        <!-- <img src='/assets/product-images/accessories-wrist-band.jpeg' alt=""> -->
+      </div>
+      
+   </main>
+
+   <button id="back-to-top" title="Back to top">&uarr;</button>
+
+    <footer>
+      <div class="copyright">
+         <img src="assets/jmain 2.png" alt="">
+         <p>copyright &copy; 2022</p>
+      </div>
+
+      <div class="policy">
+         <a href="">Privacy policy</a>
+         <a href="">Terms of Use</a>
+      </div>
+              <!-- footer nav bngs here -->
+              <nav>
+               <ul>
+                  <a href="index.html">Home</a>
+                  <a href="about.html">About</a>
+                  <a href="/shop.html"  style="color:#ff6347;">Shop</a>
+                  <div class="men">
+                     <a href="men.html">Men</a>
+                     <div class="men_sub_menu">
+                        <a href="">Apparel</a>
+                        <a href="">Shoes</a>
+                        <a href="">Bags</a>
+                        <a href="">Accessories</a>
+                     </div>
+                  </div>
+                  <div class="men"> 
+                     <a href="women.html">Women</a>
+                     <div class="men_sub_menu">
+                        <a href="">Apparel</a>
+                        <a href="">Shoes</a>
+                        <a href="">Bags</a>
+                        <a href="">Accessories</a>
+                     </div>
+                  </div>
+                  <a href="contact.html">contact</a>
+                 
+                
+                  
+               </ul>
+             </nav>
+                   <!-- footer nav ends here -->
+   
+      <div class="socials">
+         <h4>Follow us on</h4>
+         <div class="icons">
+            <img src="assets/icons/facebook-icon.svg" alt="">
+           <img src="assets/icons/instagram-icon.svg" alt="">
+           <img src="assets/icons/twitterx-icon.svg" alt="">
+         </div>
+      </div>
+   </footer>
+   <script type="module" src="/js/shop.js"></script>
+   <script type="module">
+      import { addToCart, getCartCount } from './data/cart.js';
+      import { products } from './data/men-and-women.js';
+
+      const cartCountElement = document.querySelector('.js-cart-quantity');
+      const categoryLinks = document.querySelectorAll('.js-category');
+      const shopDisplay = document.querySelector('.shop_display');
+      let currentPage = 1;
+      const productsPerPage = 10;
+
+      categoryLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+              e.preventDefault();
+              currentPage = 1;
+              shopDisplay.innerHTML = '';
+              const category = e.target.classList.contains('js-men') ? 'men' : 'women';
+              displayProducts(products[category].shoes.concat(products[category].bags), currentPage);
+              setActiveCategory(e.target);
+          });
+      });
+
+      function displayProducts(products, page) {
+          const start = (page - 1) * productsPerPage;
+          const end = start + productsPerPage;
+          const paginatedProducts = products.slice(start, end);
+
+          shopDisplay.innerHTML += paginatedProducts.map(product => `
+              <div class="single_product">
+                  <a href="../singleproduct.html"><img src=${product.image} data-product-name='${product.name}' class='product_image' alt=""></a>
+                  <div class="single_product_detail">
+                      <p><small>Name</small>: ${product.name}</p>
+                      <p><small>Price</small>: ${product.price}</p>
+                      <button class='btn js-add-to-cart' data-product-id='${product.id}'>Add to Cart</button>
+                  </div>
+              </div>
+          `).join('');
+
+          document.querySelectorAll('.js-add-to-cart').forEach(button => {
+              button.addEventListener('click', () => {
+                  const productId = button.dataset.productId;
+                  addToCart(productId);
+                  updateCartQuantity();
+              });
+          });
+      }
+
+      function setActiveCategory(activeLink) {
+          categoryLinks.forEach(link => {
+              link.classList.remove('active');
+          });
+          activeLink.classList.add('active');
+      }
+
+      function updateCartQuantity() {
+          cartCountElement.textContent = getCartCount();
+      }
+
+      window.addEventListener('scroll', () => {
+          const backToTopButton = document.getElementById('back-to-top');
+          if (window.scrollY > 300) {
+              backToTopButton.style.display = 'block';
+          } else {
+              backToTopButton.style.display = 'none';
+          }
+
+          if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+              currentPage++;
+              const activeCategory = document.querySelector('.js-category.active').classList.contains('js-men') ? 'men' : 'women';
+              displayProducts(products[activeCategory].shoes.concat(products[activeCategory].bags), currentPage);
+          }
+      });
+
+      document.getElementById('back-to-top').addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      updateCartQuantity();
+   </script>
+</body>
+</html>

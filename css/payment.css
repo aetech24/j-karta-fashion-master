@@ -1,0 +1,119 @@
+main {
+   padding: 20px 60px;
+   text-align: center;
+}
+
+.logo img {
+   width: 200px;
+}
+
+h1 {
+   padding: 40px;
+}
+
+
+.payment_container {
+   display: flex;
+   align-items: start;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+/* ======= express payment */
+.left {
+   width: 100%;
+   /* border: solid 1px #ccc; */
+   padding: 20px;
+}
+
+.express_payment {
+   display: flex;
+   border: solid 1px #ccc;
+   padding: 20px;
+   gap: 20px;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+}
+
+.mtn {
+   background-color: rgb(249, 130, 2);
+   color: black;
+   display: flex;
+   text-align: center;
+   padding: 9px;
+   width: 50%;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+}
+
+p {
+   text-align: center;
+}
+
+.debit {
+   background-color: black;
+   width: 50%;
+   text-align: center;
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+   cursor: pointer;
+}
+
+.debit img {
+   width: 40px;
+}
+
+.right {
+   width: 350px;
+   border: solid 1px #ccc;
+   padding: 20px;
+   border-radius: 5px;
+}
+
+.continue {
+   display: flex;
+   padding: 40px;
+}
+
+.continue hr {
+   width: 30%;
+}
+
+.contact_info {
+   text-align: start;
+}
+
+.contact_info h4, .contact_info p{
+   text-align: start;
+   padding-left: 0;
+}
+
+.contact_input {
+   padding: 10px 0;
+}
+
+.contact_input input {
+   padding: 10px;
+   width: 100%;
+}
+
+.checkbox {
+   display: flex;
+   gap: 10px;
+   padding-bottom: 40px;
+}
+
+.name {
+   display: flex;
+   width: 100%;
+   gap: 10px;
+}
+
+.name .contact_input {
+   width: 100%;
+}

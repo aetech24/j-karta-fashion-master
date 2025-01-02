@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jkata-fahsion/women</title>
+    <link rel="stylesheet" href="/css/shared.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/men-and-women.css">
+    <style>
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            width: 280px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto;
+        }
+
+        .product-item img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- logo -->
+        <div class="logo">
+            <a href="index.html">
+            <img src="assets/jkarla logo orange.png" alt="">
+            </a>
+         </div>
+     
+        <!-- nav bngs here -->
+         <nav>
+           <ul>
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="shop.html">Shop</a>
+              <div class="men">
+                 <a href="men.html">Men</a>
+                 <div class="men_sub_menu">
+                    <a href="">Apparel</a>
+                    <a href="">Shoes</a>
+                    <a href="">Bags</a>
+                    <a href="">Accessories</a>
+                 </div>
+              </div>
+              <div class="men"> 
+                 <a href="women.html" style="color:#ff6347;">Women</a>
+                 <div class="men_sub_menu">
+                    <a href=""  style="color:#000;">Apparel</a>
+                    <a href=""  style="color:#000;">Shoes</a>
+                    <a href=""  style="color:#000;">Bags</a>
+                    <a href=""  style="color:#000;">Accessories</a>
+                 </div>
+              </div>
+              <a href="contact.html">contact</a>
+              
+           </ul>
+         </nav>
+         <!-- nav ends here -->
+  
+        <a href="checkout.html">
+           <div class="shop">
+              <img src="/assets/icons/cart-icon.png" alt="" width="20px">
+              <div class="cart_count">
+                 <p>0</p>
+              </div>
+           </div>
+        </a>
+     </header>
+     <!-- main body -->
+      <main>
+        <div class="category">
+            <a href="#" class="js-category" data-category="apparels">Apparels</a>
+            <a href="#" class="js-category" data-category="shoes">Shoes</a>
+            <a href="#" class="js-category" data-category="bags">Bags</a>
+            <a href="#" class="js-category" data-category="accessories">Accessories</a>
+        </div>
+        <div class="product_display js-product-display">
+            <!-- Products will be displayed here -->
+        </div>
+      </main>
+      <!-- end of main body -->
+        <!-- footer  -->
+   <footer>
+    <div class="copyright">
+       <img src="assets/jmain 2.png" alt="">
+       <p>copyright &copy; 2022</p>
+    </div>
+
+    <div class="policy">
+       <a href="">Privacy policy</a>
+       <a href="">Terms of Use</a>
+    </div>
+        <!-- footer nav bngs here -->
+        <nav>
+            <ul>
+               <a href="index.html">Home</a>
+               <a href="about.html">About</a>
+               <a href="shop.html">Shop</a>
+               <div class="men">
+                  <a href="men.html">Men</a>
+                  <div class="men_sub_menu">
+                     <a href="">Apparel</a>
+                     <a href="">Shoes</a>
+                     <a href="">Bags</a>
+                     <a href="">Accessories</a>
+                  </div>
+               </div>
+               <div class="men"> 
+                  <a href="women.html" style="color:#ff6347;">Women</a>
+                  <div class="men_sub_menu">
+                     <a href=""  style="color:#000;">Apparel</a>
+                     <a href=""  style="color:#000;">Shoes</a>
+                     <a href=""  style="color:#000;">Bags</a>
+                     <a href=""  style="color:#000;">Accessories</a>
+                  </div>
+               </div>
+               <a href="contact.html">contact</a>
+               
+            </ul>
+          </nav>
+          <!-- footer nav ends here -->
+ 
+    <div class="socials">
+       <h4>Follow us on</h4>
+       <div class="icons">
+          <img src="assets/icons/facebook-icon.svg" alt="Facebook">
+         <img src="assets/icons/instagram-icon.svg" alt="Instagram">
+         <img src="assets/icons/twitterx-icon.svg" alt="Twitter">
+       </div>
+    </div>
+ </footer>
+<!--  -->
+    <button id="back-to-top" title="Back to top">&uarr;</button>
+    <script type="module" src="/js/all-js.js"></script>
+    <script type="module" src="/js/product_display.js"></script>
+    <script type="module" src="/js/shop.js"></script>
+    <script type="module">
+        import products from './data/men-and-women.js';
+        import { addToCart, getCartCount } from './data/cart.js';
+
+        const productDisplay = document.querySelector('.js-product-display');
+        const categoryLinks = document.querySelectorAll('.js-category');
+        const cartCountElement = document.querySelector('.cart_count p');
+        let currentPage = 1;
+        const productsPerPage = 10;
+
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = e.target.dataset.category;
+                currentPage = 1;
+                productDisplay.innerHTML = '';
+                displayProducts(products.women[category], currentPage);
+                setActiveCategory(e.target);
+            });
+        });
+
+        function displayProducts(products, page) {
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const paginatedProducts = products.slice(start, end);
+
+            productDisplay.innerHTML += paginatedProducts.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$${product.price}</p>
+                    <button class="js-add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.js-add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.target.dataset.productId;
+                    addToCart(productId);
+                    updateCartCount();
+                });
+            });
+        }
+
+        function setActiveCategory(activeLink) {
+            categoryLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            activeLink.classList.add('active');
+        }
+
+        function updateCartCount() {
+            cartCountElement.textContent = getCartCount();
+        }
+
+        window.addEventListener('scroll', () => {
+            const backToTopButton = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                currentPage++;
+                const activeCategory = document.querySelector('.js-category.active').dataset.category;
+                displayProducts(products.women[activeCategory], currentPage);
+            }
+        });
+
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        updateCartCount();
+
+        // Initially display all women's products
+        displayProducts(products.women.shoes.concat(products.women.bags, products.women.apparels, products.women.accessories), currentPage);
+    </script>
+</body>
+</html>
